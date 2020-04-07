@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "libapps": "github:yudai/libapps#release-hterm-1.70",
-        "xterm": "^2.7.0"
+        "xterm": "^3.8.1"
     },
     "scripts": {
         "build": "webpack --config webpack.config.js",
