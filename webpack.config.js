@@ -1,11 +1,15 @@
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-    entry: "./src/main.js",
+    entry: "./js/main.js",
     output: {
         filename: "./dist/gotty-bundle.js"
     },
-    devtool: "source-map",
+    devtool: "inline-source-map",
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+    },
     resolve: {
         extensions: [".js"],
     },

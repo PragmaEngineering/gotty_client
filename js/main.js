@@ -16,7 +16,9 @@ if (elem !== null) {
     const url = newEndPoint; //(httpsEnabled ? 'wss://' : 'ws://') + window.location.host + window.location.pathname + 'ws';
     const args = window.location.search;
     const factory = new ConnectionFactory(url, protocols);
+    console.log("factory: " + factory);
     const wt = new WebTTY(term, factory, args, gotty_auth_token);
+    console.log('wt: ' + wt)
     const closer = wt.open();
     window.addEventListener("unload", () => {
         closer();

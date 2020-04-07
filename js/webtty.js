@@ -9,6 +9,7 @@ export const msgPong = '2';
 export const msgSetWindowTitle = '3';
 export const msgSetPreferences = '4';
 export const msgSetReconnect = '5';
+
 export class WebTTY {
     constructor(term, connectionFactory, args, authToken) {
         this.term = term;
