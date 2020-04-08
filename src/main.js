@@ -11,9 +11,9 @@ if (elem !== null) {
     else {
         term = new Xterm(elem);
     }
-    const newEndPoint = 'http://localhost:1337/';
+    // const newEndPoint = 'http://localhost:1337/';
     const httpsEnabled = window.location.protocol == "https:";
-    const url = newEndPoint; //(httpsEnabled ? 'wss://' : 'ws://') + window.location.host + window.location.pathname + 'ws';
+    const url = (httpsEnabled ? 'wss://0.0.0.0:8080' : 'ws://0.0.0.0:8080') + window.location.host + window.location.pathname + 'ws';
     const args = window.location.search;
     const factory = new ConnectionFactory(url, protocols);
     console.log("factory: " + factory);

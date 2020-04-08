@@ -1,4 +1,4 @@
-import * as bare from "libapps";
+import * as bare from "../node_modules/libapps";
 
 
 export class Hterm {

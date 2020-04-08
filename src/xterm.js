@@ -1,5 +1,5 @@
-import * as bare from "xterm";
-import { lib } from "libapps";
+import * as bare from "../node_modules/xterm";
+import { lib } from "../node_modules/libapps";
 bare.loadAddon("fit");
 
 
