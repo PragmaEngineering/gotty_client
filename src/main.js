@@ -5,6 +5,8 @@ import { ConnectionFactory } from "./websocket";
 const elem = document.getElementById("terminal");
 
 var gotty_term;
+var gotty_auth_token;
+
 if (elem !== null) {
     var term;
     if (gotty_term == "hterm") {
@@ -13,14 +15,14 @@ if (elem !== null) {
     else {
         term = new Xterm(elem);
     }
-    const newEndPoint = 'http://localhost:1337/';
     const httpsEnabled = window.location.protocol == "https:";
-    const url = newEndPoint//(httpsEnabled ? 'wss://0.0.0.0:8080' : 'ws://0.0.0.0:8080') + window.location.host + window.location.pathname + 'ws';
+    const newEndPoint = (httpsEnabled ? 'wss://localhost:1337/' : 'ws://localhost:1337/') + 'ws'; //+ window.location.host + window.location.pathname + 'ws';
+    const url = newEndPoint;
     const args = window.location.search;
     const factory = new ConnectionFactory(url, protocols);
     console.log("factory: " + factory);
     const wt = new WebTTY(term, factory, args, gotty_auth_token);
-    console.log('wt: ' + wt)
+    console.log('wt: ' + wt.authToken)
     const closer = wt.open();
     window.addEventListener("unload", () => {
         closer();
