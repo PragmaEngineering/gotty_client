@@ -1,6 +1,9 @@
-import * as bare from "../node_modules/xterm";
+import * as bare from "xterm";
+import { Terminal } from 'xterm';
+import { FitAddon } from 'xterm-addon-fit';
 import { lib } from "../node_modules/libapps";
-bare.loadAddon("fit");
+
+bare.loadAddon(new FitAddon());
 
 
 export class Xterm {
