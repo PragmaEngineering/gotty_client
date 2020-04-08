@@ -9,6 +9,9 @@ module.exports = {
     devtool: "inline-source-map",
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
+        historyApiFallback: {
+           index: '/foo-app/'
+        }
     },
     resolve: {
         extensions: [".js"],
