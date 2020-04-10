@@ -3,6 +3,7 @@ const path = require('path');
 
 module.exports = {
     entry: "./src/main.js",
+    devtool: 'inline-source-map',
     output: {
         path: path.join(__dirname, 'dist'),
         filename: "gotty-bundle.js",

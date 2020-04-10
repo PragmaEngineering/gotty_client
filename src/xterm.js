@@ -1,15 +1,18 @@
-import * as bare from "xterm";
-import { Terminal } from 'xterm';
-import { FitAddon } from 'xterm-addon-fit';
+// import * as bare from "../node_modules/xterm";
 import { lib } from "../node_modules/libapps";
 
-bare.loadAddon(new FitAddon());
+import { Terminal } from 'xterm';
+import { FitAddon } from 'xterm-addon-fit';
+
+const terminal = new Terminal();
+const fitAddon = new FitAddon();
+terminal.loadAddon(fitAddon);
 
 
 export class Xterm {
     constructor(elem) {
         this.elem = elem;
-        this.term = new bare();
+        this.term = new Terminal();
         this.message = elem.ownerDocument.createElement("div");
         this.message.className = "xterm-overlay";
         this.messageTimeout = 2000;
@@ -18,10 +21,11 @@ export class Xterm {
             this.term.scrollToBottom();
             this.showMessage(String(this.term.cols) + "x" + String(this.term.rows), this.messageTimeout);
         };
-        this.term.on("open", () => {
-            this.resizeListener();
-            window.addEventListener("resize", () => { this.resizeListener(); });
-        });
+        console.log(this.term)
+        // this.term.on("open", () => {
+        //     this.resizeListener();
+        //     window.addEventListener("resize", () => { this.resizeListener(); });
+        // });
         this.term.open(elem, true);
         this.decoder = new lib.UTF8Decoder();
     };
@@ -73,8 +77,8 @@ export class Xterm {
     };
 
     deactivate() {
-        this.term.off("data");
-        this.term.off("resize");
+        // this.term.off("data");
+        // this.term.off("resize");
         this.term.blur();
     };
 
