@@ -62,17 +62,27 @@ export class Xterm {
     };
 
     setPreferences(value) {
+        this.term.setOption('cursorStyle', 'block')
     };
 
     onInput(callback) {
-        this.term.on("data", (data) => {
-            callback(data);
-        });
+        // this.term.on("data", (data) => {
+        //     callback(data);
+        // });
     };
 
+    onData(callback) {
+        this.term.onData((data) => {
+            callback(data);
+        })
+    }
+
     onResize(callback) {
-        this.term.on("resize", (data) => {
-            callback(data.cols, data.rows);
+        // this.term.on("resize", (data) => {
+        //     callback(data.cols, data.rows);
+        // });
+        this.term.onResize((data) => {
+            callback(data);
         });
     };
 

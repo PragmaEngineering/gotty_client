@@ -41,6 +41,9 @@ export class WebTTY {
                 this.term.onInput((input) => {
                     connection.send(msgInput + input);
                 });
+                this.term.onData((input) => {
+                    this.term.output(input);
+                })
                 pingTimer = setInterval(() => {
                     connection.send(msgPing);
                 }, 30 * 1000);
@@ -50,6 +53,7 @@ export class WebTTY {
                 switch (data[0]) {
                     case msgOutput:
                         this.term.output(atob(payload));
+                        console.log(JSON.stringify(atob(payload)));
                         break;
                     case msgPong:
                         break;
@@ -59,6 +63,7 @@ export class WebTTY {
                     case msgSetPreferences:
                         const preferences = JSON.parse(payload);
                         this.term.setPreferences(preferences);
+                        console.log("preferences payload: " + payload);
                         break;
                     case msgSetReconnect:
                         const autoReconnect = JSON.parse(payload);
