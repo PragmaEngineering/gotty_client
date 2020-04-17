@@ -34,6 +34,12 @@ export class Xterm {
         return { columns: this.term.cols, rows: this.term.rows };
     };
 
+    keypress(callback) {
+        this.term.onKey((event) => {
+            callback(event)
+        });
+    }
+
     output(data) {
         this.term.write(this.decoder.decode(data));
     };
@@ -62,6 +68,7 @@ export class Xterm {
     };
 
     setPreferences(value) {
+        this.term.attach
         this.term.setOption('cursorStyle', 'block')
     };
 

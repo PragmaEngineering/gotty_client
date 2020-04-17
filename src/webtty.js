@@ -40,10 +40,26 @@ export class WebTTY {
                 resizeHandler(termInfo.columns, termInfo.rows);
                 this.term.onInput((input) => {
                     connection.send(msgInput + input);
+                    console.log("sending input: " + input);
                 });
                 this.term.onData((input) => {
                     this.term.output(input);
-                })
+                });
+                this.term.keypress((event) => {
+                    console.log(event)
+                    // if (event.domEvent.keyCode === 8) {
+                    //     this.term.output('\b \b');
+                    // } else 
+                    switch (event.domEvent.keyCode) {
+                        case 8: // backspace
+                            this.term.output('\b \b');
+                            break;
+                        case 13: // return / enter
+                            this.term.output('\r\n');
+                        default:
+                            break;
+                    }
+                });
                 pingTimer = setInterval(() => {
                     connection.send(msgPing);
                 }, 30 * 1000);
@@ -53,7 +69,6 @@ export class WebTTY {
                 switch (data[0]) {
                     case msgOutput:
                         this.term.output(atob(payload));
-                        console.log(JSON.stringify(atob(payload)));
                         break;
                     case msgPong:
                         break;
