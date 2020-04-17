@@ -73,9 +73,9 @@ export class Xterm {
     };
 
     onInput(callback) {
-        // this.term.on("data", (data) => {
-        //     callback(data);
-        // });
+        this.term.onData((data) => {
+            callback(data);
+        })
     };
 
     onData(callback) {

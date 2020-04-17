@@ -42,10 +42,6 @@ export class WebTTY {
                     connection.send(msgInput + input);
                     console.log("sending input: " + input);
                 });
-                this.term.onData((input) => {
-                    this.term.output(input);
-                });
-                var currentLine = '';
                 this.term.keypress((event) => {
                     console.log(event)
                     // if (event.domEvent.keyCode === 8) {
@@ -56,11 +52,8 @@ export class WebTTY {
                             this.term.output('\b \b');
                             break;
                         case 13: // return || enter
-                            console.log("Current line: " + currentLine);
-                            connection.send(currentLine);
                             this.term.output('\r\n');
                         default:
-                            currentLine += event.key
                             break;
                     }
                 });
