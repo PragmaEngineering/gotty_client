@@ -1,18 +1,17 @@
-// import * as bare from "../node_modules/xterm";
+import * as bare from "../node_modules/xterm";
 import { lib } from "../node_modules/libapps";
 
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 
-const terminal = new Terminal();
-const fitAddon = new FitAddon();
-terminal.loadAddon(fitAddon);
-
+var opts = { cols: 80, rows: 100, screenKeys: true, cursorBlink: true, cursorStyle: 'block' }
 
 export class Xterm {
     constructor(elem) {
         this.elem = elem;
-        this.term = new Terminal();
+        this.term = new Terminal(opts);
+        this.fitAddOn = new FitAddon();
+        this.term.loadAddon(this.fitAddOn);
         this.message = elem.ownerDocument.createElement("div");
         this.message.className = "xterm-overlay";
         this.messageTimeout = 2000;
@@ -21,11 +20,6 @@ export class Xterm {
             this.term.scrollToBottom();
             this.showMessage(String(this.term.cols) + "x" + String(this.term.rows), this.messageTimeout);
         };
-        console.log(this.term)
-        // this.term.on("open", () => {
-        //     this.resizeListener();
-        //     window.addEventListener("resize", () => { this.resizeListener(); });
-        // });
         this.term.open(elem, true);
         this.decoder = new lib.UTF8Decoder();
     };
@@ -69,8 +63,11 @@ export class Xterm {
 
     setPreferences(value) {
         this.term.attach
-        this.term.setOption('cursorStyle', 'block')
     };
+
+    setPrompt(promptText) {
+        this.term.prompt = promptText
+    }
 
     onInput(callback) {
         this.term.onData((data) => {
@@ -85,9 +82,6 @@ export class Xterm {
     }
 
     onResize(callback) {
-        // this.term.on("resize", (data) => {
-        //     callback(data.cols, data.rows);
-        // });
         this.term.onResize((data) => {
             callback(data);
         });
@@ -103,6 +97,10 @@ export class Xterm {
         this.removeMessage();
         this.term.clear();
     };
+
+    focus() {
+        this.term.focus();
+    }
 
     close() {
         window.removeEventListener("resize", this.resizeListener);

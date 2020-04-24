@@ -40,13 +40,8 @@ export class WebTTY {
                 resizeHandler(termInfo.columns, termInfo.rows);
                 this.term.onInput((input) => {
                     connection.send(msgInput + input);
-                    console.log("sending input: " + input);
                 });
                 this.term.keypress((event) => {
-                    console.log(event)
-                    // if (event.domEvent.keyCode === 8) {
-                    //     this.term.output('\b \b');
-                    // } else 
                     switch (event.domEvent.keyCode) {
                         case 8: // backspace
                             this.term.output('\b \b');
