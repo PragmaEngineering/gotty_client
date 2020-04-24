@@ -4,7 +4,7 @@ import { lib } from "../node_modules/libapps";
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 
-var opts = { cols: 80, rows: 100, screenKeys: true, cursorBlink: true, cursorStyle: 'block' }
+var opts = { cols: 80, rows: 20, screenKeys: true, cursorBlink: true, cursorStyle: 'block' }
 
 export class Xterm {
     constructor(elem) {
@@ -16,12 +16,11 @@ export class Xterm {
         this.message.className = "xterm-overlay";
         this.messageTimeout = 2000;
         this.resizeListener = () => {
-            this.term.fit();
-            this.term.scrollToBottom();
             this.showMessage(String(this.term.cols) + "x" + String(this.term.rows), this.messageTimeout);
         };
         this.term.open(elem, true);
         this.decoder = new lib.UTF8Decoder();
+        window.addEventListener("resize", () => { this.resizeListener(); });
     };
 
     info() {
@@ -100,6 +99,10 @@ export class Xterm {
 
     focus() {
         this.term.focus();
+    }
+
+    fitTerminal() {
+        this.fitAddOn.fit();
     }
 
     close() {

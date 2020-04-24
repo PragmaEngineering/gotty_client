@@ -30,9 +30,9 @@ export class WebTTY {
                     Arguments: this.args,
                     AuthToken: this.authToken,
                 }));
-                const resizeHandler = (colmuns, rows) => {
+                const resizeHandler = (columns, rows) => {
                     connection.send(msgResizeTerminal + JSON.stringify({
-                        columns: colmuns,
+                        columns: columns,
                         rows: rows
                     }));
                 };
@@ -70,11 +70,9 @@ export class WebTTY {
                     case msgSetPreferences:
                         const preferences = JSON.parse(payload);
                         this.term.setPreferences(preferences);
-                        console.log("preferences payload: " + payload);
                         break;
                     case msgSetReconnect:
                         const autoReconnect = JSON.parse(payload);
-                        console.log("Enabling reconnect: " + autoReconnect + " seconds");
                         this.reconnect = autoReconnect;
                         break;
                 }
